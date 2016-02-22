@@ -21,8 +21,18 @@
             origin  https://github.com/blank-blank/data-sci-bowl-2016.git (push)
 
     
-3. Make local modifications. Once you make changes, running "git status" 
-   will show that the files you have modified.
+3. Make local modifications. Once you make changes, running "git status" will show that the files you have modified, added, and/or deleted.
+
+    | => git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+
+        docs/
+
+    nothing added to commit but untracked files present (use "git add" to track
+
 
 4. Add the files to be commited with the following command:
 
@@ -30,15 +40,49 @@
 
    git status will now show these ready for commit
 
-5. commit the files that have been added from the previous step:
+  
 
-   git commit -m "Added svm model. Changed version number."
+    | => git status
+    On branch master
+    Your branch is ahead of 'origin/master' by 1 commit.
+    (use "git push" to publish your local commits)
+    Changes to be committed:
+    (use "git reset HEAD <file>..." to unstage)
 
-6. make pull request to origin
-   
-   
+    new file:   docs/howto_git_pr.txt  
+    
+
+5. commit the files that have been added from the previous step with
+   git commit -m "An informative message about the commit"
+
+    | => git commit -m "added git pr howto doc"
+    [master 3c00e9e] added git pr howto doc
+     1 file changed, 44 insertions(+)
+     create mode 100644 docs/howto_git_pr.txt
+
+6. push your changes back to your forked repo with "git push origin master"
 
 
+    Note: Because I have multiple github user accounts, the push tried to use my work account.  This failed as my work account does not have write access to my personal fork repo:
 
+        | => git push origin master
+        remote: Permission to blank-blank/data-sci-bowl-2016.git denied to tlewis11.
+        fatal: unable to access 'https://github.com/blank-blank/data-sci-bowl-2016.git/': The requested URL returned error: 403
 
+    To get around this, I had to push to the origin.url manually and specify my username in the url:
 
+        | => git push https://blank-blank@github.com/blank-blank/data-sci-bowl-2016.git master
+        Password for 'https://blank-blank@github.com': 
+        Counting objects: 7, done.
+        Delta compression using up to 8 threads.
+        Compressing objects: 100% (5/5), done.
+        Writing objects: 100% (7/7), 1.15 KiB | 0 bytes/s, done.
+        Total 7 (delta 1), reused 0 (delta 0)
+        To https://blank-blank@github.com/blank-blank/data-sci-bowl-2016.git
+           23f8fb9..3c00e9e  master -> master
+
+7. Navigate to the forked repo on Github
+8. Click "New Pull Requst"
+9. Ensure that base fork is the master branch of the Boulder Data Science repo for the Kaggle competition and that the head fork is the master branch of the forked repo that you pushed to in step 6.
+10. Click "Create Pull Request" and then fill in appropriate fields.
+11. Inform admins in slack channel.  Once an admin merges the pull request, your code will be in the master repo for the Boulder Data Science Kaggle competition.
