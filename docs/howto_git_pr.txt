@@ -1,0 +1,44 @@
+1. Create a fork of this repo by clicking the fork button in the top right. 
+   This will create an exact copy of the repo in your Github user account.
+
+2. Clone your new repo
+
+      git clone https://github.com/blank-blank/data-sci-bowl-2016.git
+
+    "git status" should now say you are on the master branch
+
+        => git status
+        On branch master
+        Your branch is up-to-date with 'origin/master'.
+        nothing to commit, working directory clean
+
+    "git remote -v" should show an "origin" remote with the url of your 
+    forked repo.
+
+
+        | => git remote -v
+            origin  https://github.com/blank-blank/data-sci-bowl-2016.git (fetch)
+            origin  https://github.com/blank-blank/data-sci-bowl-2016.git (push)
+
+    
+3. Make local modifications. Once you make changes, running "git status" 
+   will show that the files you have modified.
+
+4. Add the files to be commited with the following command:
+
+   git add file_1 path/to/file_2 
+
+   git status will now show these ready for commit
+
+5. commit the files that have been added from the previous step:
+
+   git commit -m "Added svm model. Changed version number."
+
+6. make pull request to origin
+   
+   
+
+
+
+
+
