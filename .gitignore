@@ -4,3 +4,5 @@ data/
 *.npy
 *.hdf5
 *.txt
+*.csv
+kaggle contact
