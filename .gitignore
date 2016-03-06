@@ -5,8 +5,13 @@
 *.npy
 *.hdf5
 *.csv
-kaggle contact
-.DS_Store
 *~
+.DS_Store
+
+train
+validate
+val_loss.txt
+
+kaggle contact
 venv
 
