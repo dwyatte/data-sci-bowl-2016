@@ -1,11 +1,9 @@
 *.swp
 =======
 .idea/
-data/
 *.pyc
 *.npy
 *.hdf5
-*.txt
 *.csv
 kaggle contact
 .DS_Store
