@@ -8,3 +8,7 @@ data/
 *.txt
 *.csv
 kaggle contact
+.DS_Store
+*~
+venv
+

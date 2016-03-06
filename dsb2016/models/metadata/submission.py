@@ -27,29 +27,5 @@ with open('submission_test.csv', 'wb') as csvfile:
         row.extend(cdf_pred_diastole[i])
         csvwriter.writerow(row)
         row = [str(row_num)+'_Systole']
-        row.extend(cdf_pred_diastole[i])
+        row.extend(cdf_pred_systole[i])
         csvwriter.writerow(row)
-
-
-# write to submission file
-#print('Writing submission to file...')
-#fi = csv.reader(open('data/sample_submission_validate.csv'))
-#f = open('submission.csv', 'w')
-#fo = csv.writer(f, lineterminator='\n')
-#fo.writerow(fi.next())
-#for line in fi:
-#    idx = line[0]
-#    key, target = idx.split('_')
-#    key = int(key)
-#    out = [idx]
-#    if key in sub_systole:
-#        if target == 'Diastole':
-#            out.extend(list(sub_diastole[key][0]))
-#        else:
-#            out.extend(list(sub_systole[key][0]))
-#    else:
-#        print('Miss {0}'.format(idx))
-#    fo.writerow(out)
-#f.close()
-#
-#print('Done.')
