@@ -10,7 +10,7 @@ from sklearn.cross_validation import train_test_split
 
 
 TRAIN_PCT = 0.8
-PROTO_PIPELINE = Pipeline([
+PROTO_MODEL = Pipeline([
     ('ce', ColumnExtractor()),
     ('ss', StandardScaler()),
     ('gbr', GradientBoostingRegressor(random_state=0))
@@ -94,9 +94,9 @@ if __name__ == '__main__':
     outputs = pd.read_csv('data/train.csv', index_col='Id').sort_index()
 
     print 'Before feature selection: Diastole'
-    diastole_model = train_model(PROTO_PIPELINE, features, outputs['Diastole'], TRAIN_PCT)
+    diastole_model = train_model(PROTO_MODEL, features, outputs['Diastole'], TRAIN_PCT)
     print 'Before feature selection: Systole'
-    systole_model = train_model(PROTO_PIPELINE, features, outputs['Systole'], TRAIN_PCT)
+    systole_model = train_model(PROTO_MODEL, features, outputs['Systole'], TRAIN_PCT)
     print ''
 
     diastole_features = select_features_from_tree(features, diastole_model.steps[-1][-1])
