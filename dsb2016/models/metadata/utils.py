@@ -1,5 +1,23 @@
 import numpy as np
 from scipy.stats import norm
+from sklearn.base import BaseEstimator
+
+
+class ColumnExtractor(BaseEstimator):
+    """
+    Simple column extractor
+    """
+    def __init__(self, columns=None):
+        self.columns = columns
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        if self.columns:
+            return X[self.columns]
+        else:
+            return X
 
 
 def crps(true, pred):

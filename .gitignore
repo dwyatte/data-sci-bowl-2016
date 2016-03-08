@@ -5,6 +5,7 @@
 *.npy
 *.hdf5
 *.csv
+*.pkl
 *~
 .DS_Store
 
