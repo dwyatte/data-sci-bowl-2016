@@ -102,12 +102,12 @@ def extract_metadata(path, filename):
                         data.loc[0, attr] = getattr(image, attr)
                 data.loc[0, 'ImagePath'] = image_file
                 with open(filename, 'a') as f:
-                    if i==0:
+                    if i == 0:
                         data.to_csv(f, header=True, index=False)
                     else:
                         data.to_csv(f, header=False, index=False)
                 i += 1
-                if i % 100==0:
+                if i % 100 == 0:
                     print i, image_file
 
 if __name__ == '__main__':
