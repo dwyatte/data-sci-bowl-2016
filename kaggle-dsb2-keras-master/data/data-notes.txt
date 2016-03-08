@@ -1,6 +1,0 @@
-Save the data in this folder for the script to run correctly.
-
-data/
-    train/
-    validate/
-    train.csv

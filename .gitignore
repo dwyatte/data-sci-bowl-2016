@@ -1,1 +1,18 @@
 *.swp
+=======
+.idea/
+*.pyc
+*.npy
+*.hdf5
+*.csv
+*.pkl
+*~
+.DS_Store
+
+train
+validate
+val_loss.txt
+
+kaggle contact
+venv
+

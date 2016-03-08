@@ -1,10 +1,10 @@
 from __future__ import print_function
 
 import csv
-import numpy as np
 
-from model import get_model
+import numpy as np
 from utils import real_to_cdf, preprocess
+from model import get_model
 
 
 def load_validation_data():
