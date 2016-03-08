@@ -7,7 +7,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.feature_selection import SelectFromModel
-from sklearn.cross_validation import train_test_split, ShuffleSplit
+from sklearn.cross_validation import train_test_split
 
 
 TRAIN_PCT = 0.8
