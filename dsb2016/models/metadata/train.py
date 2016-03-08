@@ -6,7 +6,8 @@ from sklearn.base import clone
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.cross_validation import train_test_split
+from sklearn.feature_selection import SelectFromModel
+from sklearn.cross_validation import train_test_split, ShuffleSplit
 
 
 TRAIN_PCT = 0.8
@@ -69,8 +70,10 @@ def train_model(model, X, y, train_pct):
     y_train, y_test = train_test_split(y, test_size=1.0-train_pct, random_state=0)
     model = clone(model).fit(X_train, y_train)
     if train_pct < 1.0:
-        print 'Loss=%f' % root_mean_squared_error(y_test, model.predict(X_test))
-    return model
+        loss = root_mean_squared_error(y_test, model.predict(X_test))
+        return model, loss
+    else:
+        return model, None
 
 
 def select_features_from_tree(features, tree):
@@ -88,32 +91,29 @@ def save_model(filename, model):
         pickle.dump(model, f)
         print 'Wrote %s' % filename
 
+
 if __name__ == '__main__':
     metadata = pd.read_csv('data/metadata_train.csv', usecols=['ImagePath', 'PatientAge', 'PatientSex'])
     features = extract_features(metadata).set_index('Id').sort_index()
     outputs = pd.read_csv('data/train.csv', index_col='Id').sort_index()
 
-    print 'Before feature selection: Diastole'
-    diastole_model = train_model(PROTO_MODEL, features, outputs['Diastole'], TRAIN_PCT)
-    print 'Before feature selection: Systole'
-    systole_model = train_model(PROTO_MODEL, features, outputs['Systole'], TRAIN_PCT)
-    print ''
+    diastole_model, diastole_loss = train_model(PROTO_MODEL, features, outputs['Diastole'], TRAIN_PCT)
+    systole_model, systole_loss = train_model(PROTO_MODEL, features, outputs['Systole'], TRAIN_PCT)
+    if diastole_loss and systole_loss:
+        print 'Before feature selection\nDiastole=%f\nSystole=%f\n' % (diastole_loss, systole_loss)
 
-    diastole_features = select_features_from_tree(features, diastole_model.steps[-1][-1])
-    systole_features = select_features_from_tree(features, systole_model.steps[-1][-1])
+    diastole_columns = list(features.columns[SelectFromModel(diastole_model.steps[-1][-1], prefit=True).get_support()])
+    systole_columns = list(features.columns[SelectFromModel(systole_model.steps[-1][-1], prefit=True).get_support()])
 
-    print 'Selected features: Diastole\n%s' % diastole_features
-    print 'Selected features: Systole\n%s' % systole_features
-    print ''
+    print 'Selected features\nDiastole: %s\nSystole: %s\n' % (diastole_columns, systole_columns)
 
-    diastole_model = diastole_model.set_params(ce__columns=diastole_features)
-    systole_model = systole_model.set_params(ce__columns=systole_features)
+    diastole_model = diastole_model.set_params(ce__columns=diastole_columns)
+    systole_model = systole_model.set_params(ce__columns=systole_columns)
 
-    print 'After feature selection: Diastole'
-    diastole_model = train_model(diastole_model, features, outputs['Diastole'], TRAIN_PCT)
-    print 'After feature selection: Systole'
-    systole_model = train_model(systole_model, features, outputs['Systole'], TRAIN_PCT)
-    print ''
+    diastole_model, diastole_loss = train_model(diastole_model, features, outputs['Diastole'], TRAIN_PCT)
+    systole_model, systole_loss = train_model(systole_model, features, outputs['Systole'], TRAIN_PCT)
+    if diastole_loss and systole_loss:
+        print 'After feature selection\nDiastole=%f\nSystole=%f\n' % (diastole_loss, systole_loss)
 
     save_model('diastole.pkl', diastole_model)
     save_model('systole.pkl', systole_model)
