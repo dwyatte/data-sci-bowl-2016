@@ -76,13 +76,6 @@ def train_model(model, X, y, train_pct):
         return model, None
 
 
-def select_features_from_tree(features, tree):
-    """
-    select features (df) from tree
-    """
-    return list(features.columns[tree.feature_importances_ > np.mean(tree.feature_importances_)])
-
-
 def save_model(filename, model):
     """
     Save model (pickle format)
